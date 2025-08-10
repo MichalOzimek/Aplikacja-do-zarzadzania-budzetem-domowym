@@ -39,6 +39,8 @@ export class TransactionsComponent implements OnInit {
   editingIncome: Income | null = null;
   editingPurchase: any = null;
   showEditDialog = false;
+  showEditIncomeDialog = false;
+  showEditPurchaseDialog = false;
 
   transactions = computed(() => {
     const mappedIncomes = this.incomesService.incomes().map((income) => ({
@@ -106,12 +108,12 @@ export class TransactionsComponent implements OnInit {
 
   openEditIncomeDialog(income: Income) {
     this.editingIncome = { ...income };
-    this.showEditDialog = true;
+    this.showEditIncomeDialog = true;
   }
 
   openEditPurchaseDialog(purchase: any) {
     this.editingPurchase = { ...purchase };
-    this.showEditDialog = true;
+    this.showEditPurchaseDialog = true;
   }
 
   saveIncome() {
@@ -151,6 +153,8 @@ export class TransactionsComponent implements OnInit {
   }
 
   closeEditDialog() {
+    this.showEditIncomeDialog = false;
+    this.showEditPurchaseDialog = false;
     this.editingIncome = null;
     this.editingPurchase = null;
     this.showEditDialog = false;
