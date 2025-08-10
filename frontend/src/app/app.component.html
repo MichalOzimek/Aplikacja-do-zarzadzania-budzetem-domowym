@@ -1,0 +1,144 @@
+<app-menu /> <router-outlet />
+<div class="fab-container">
+  <button class="fab add" (click)="showIncomeDialog = true">+</button>
+  <button class="fab remove" (click)="showExpenseDialog = true">−</button>
+</div>
+
+<!-- DIALOG WPŁYWY/WYDATKI -->
+<p-dialog
+  header="Dodaj wpływ"
+  [(visible)]="showIncomeDialog"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '500px', height: '250px' }"
+>
+  <div class="p-fluid">
+    <div class="p-field row-incomes">
+      <label for="source">Opis</label>
+      <input
+        id="source"
+        type="text"
+        [(ngModel)]="newIncome.source"
+        class="p-inputtext p-component"
+      />
+    </div>
+
+    <div class="p-field row-incomes">
+      <label for="amount">Kwota</label>
+      <input
+        id="amount"
+        type="number"
+        [(ngModel)]="newIncome.amount"
+        class="p-inputtext p-component"
+      />
+    </div>
+
+    <div class="p-field row-incomes">
+      <label for="accountId">Konto</label>
+      <p-dropdown
+        [options]="accounts"
+        optionLabel="name"
+        optionValue="id"
+        [(ngModel)]="newPurchuase.accountId"
+        placeholder="Wybierz konto"
+        [appendTo]="'body'"
+        [scrollHeight]="'200px'"
+      ></p-dropdown>
+    </div>
+
+    <button
+      pButton
+      type="button"
+      label="Dodaj"
+      icon="pi pi-check"
+      (click)="submitIncome()"
+    ></button>
+  </div>
+</p-dialog>
+
+<!-- DODAJ WYDATEK -->
+<p-dialog
+  header="Dodaj wydatek"
+  [(visible)]="showExpenseDialog"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '500px' }"
+>
+  <div class="p-fluid">
+    <div class="p-field row-expense">
+      <label for="note">Opis</label>
+      <input
+        id="note"
+        type="text"
+        [(ngModel)]="newPurchuase.note"
+        class="p-inputtext"
+      />
+    </div>
+
+    <div class="p-field row-expense">
+      <label for="billCost">Kwota</label>
+      <input
+        id="billCost"
+        type="number"
+        [(ngModel)]="newPurchuase.billCost"
+        class="p-inputtext"
+      />
+    </div>
+
+    <div class="p-field row-expense">
+      <label for="date">Data</label>
+      <input
+        id="date"
+        type="date"
+        [(ngModel)]="newPurchuase.date"
+        class="p-inputtext"
+      />
+    </div>
+
+    <div class="p-field row-expense">
+      <label for="account">Konto</label>
+      <p-dropdown
+        [options]="accounts"
+        optionLabel="name"
+        optionValue="id"
+        [(ngModel)]="newPurchuase.accountId"
+        placeholder="Wybierz konto"
+        [appendTo]="'body'"
+      ></p-dropdown>
+    </div>
+
+    <div class="p-field row-expense">
+      <label for="category">Kategoria</label>
+      <p-dropdown
+        [options]="categories"
+        optionLabel="name"
+        optionValue="id"
+        [(ngModel)]="newPurchuase.categoryId"
+        placeholder="Wybierz kategorię"
+        [appendTo]="'body'"
+        [scrollHeight]="'200px'"
+      ></p-dropdown>
+    </div>
+
+    <div class="p-field row-expense">
+      <label for="shop">Sklep</label>
+      <p-dropdown
+        [options]="shops"
+        optionLabel="name"
+        optionValue="id"
+        [(ngModel)]="newPurchuase.shopId"
+        placeholder="Wybierz sklep"
+        [appendTo]="'body'"
+        [scrollHeight]="'200px'"
+      ></p-dropdown>
+    </div>
+
+    <button
+      pButton
+      type="button"
+      label="Dodaj"
+      icon="pi pi-check"
+      (click)="submitExpense()"
+    ></button>
+  </div>
+</p-dialog>

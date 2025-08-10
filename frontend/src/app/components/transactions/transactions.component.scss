@@ -1,0 +1,55 @@
+.container {
+  width: 80%;
+  margin: 50px auto;
+}
+
+.text-green {
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.text-red {
+  color: #c62828;
+  font-weight: bold;
+}
+
+.indicator {
+  width: 5px;
+  height: 100%;
+  min-height: 40px;
+  border-radius: 5px;
+  display: block;
+}
+
+.income-row .indicator {
+  background-color: #4caf50 !important;
+}
+
+.expense-row .indicator {
+  background-color: #f44336 !important;
+}
+
+:host ::ng-deep .p-toolbar {
+  border-radius: 0 !important;
+}
+
+:host ::ng-deep tr:hover {
+  background-color: #bae0ff;
+  transition: background-color 0.2s ease-in-out;
+}
+
+:host ::ng-deep .p-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+:host ::ng-deep .p-dialog {
+  width: 400px !important;
+}
+
+:host ::ng-deep th:first-child {
+  width: 10px !important;
+  padding: 0 !important;
+}

@@ -1,0 +1,78 @@
+<div class="container">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <button
+        pButton
+        label="Dodaj nowy sklep"
+        icon="pi pi-plus"
+        (click)="openCreateDialog()"
+      ></button>
+    </div>
+  </p-toolbar>
+
+  <p-table
+    [value]="shops()"
+    [paginator]="true"
+    [rows]="5"
+    class="p-hoverable-rows"
+  >
+    <ng-template pTemplate="header">
+      <tr class="grid-header">
+        <th>Nazwa</th>
+        <th>Akcje</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-shop>
+      <tr>
+        <td>{{ shop.name }}</td>
+        <td class="grid-actions">
+          <button
+            pButton
+            icon="pi pi-pencil"
+            class="p-button-text p-button-sm"
+            (click)="openEditDialog(shop)"
+          ></button>
+          <button
+            pButton
+            icon="pi pi-trash"
+            class="p-button-text p-button-danger p-button-sm"
+            (click)="deleteShop(shop)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog
+    header="{{ editingShop()?.id === 0 ? 'Dodaj nowy sklep' : 'Edytuj sklep' }}"
+    [modal]="true"
+    [closable]="true"
+    (onHide)="closeDialog()"
+    [visible]="showDialog()"
+    (visibleChange)="onDialogVisibleChange($event)"
+  >
+    <div class="p-fluid" *ngIf="editingShop() as shop">
+      <div class="p-field">
+        <label for="name">Nazwa</label>
+        <input id="name" type="text" pInputText [(ngModel)]="shop.name" />
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        label="Anuluj"
+        icon="pi pi-times"
+        (click)="showDialog.set(false)"
+        class="p-button-text"
+      ></button>
+      <button
+        pButton
+        label="Zapisz"
+        icon="pi pi-check"
+        (click)="saveShop()"
+        [disabled]="!editingShop()?.name"
+      ></button>
+    </ng-template>
+  </p-dialog>
+</div>

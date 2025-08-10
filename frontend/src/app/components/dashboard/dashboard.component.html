@@ -1,0 +1,190 @@
+<div class="container">
+  <div class="header-cards">
+    <!-- SUMMARY -->
+    <p-card header="Podsumowanie" class="header-card">
+      <div class="summary-card" *ngIf="summary()">
+        <div class="row-balance">
+          <span>Wpływy:</span>
+          <span class="text-green">{{
+            summary()?.incomes ?? 0 | currencyPLN
+          }}</span>
+        </div>
+        <div class="row-balance">
+          <span>Wydatki:</span>
+          <span class="text-red">{{
+            summary()?.expenses ?? 0 | currencyPLN
+          }}</span>
+        </div>
+        <div class="line-container"><div class="line"></div></div>
+        <div class="row-total">
+          <span>Suma:</span>
+          <span
+            [ngClass]="{
+              'text-green': (summary()?.balance ?? 0) >= 0,
+              'text-red': (summary()?.balance ?? 0) < 0,
+              bold: true
+            }"
+          >
+            {{ summary()?.balance ?? 0 | currencyPLN }}
+          </span>
+        </div>
+      </div>
+    </p-card>
+
+    <!-- WYKRES ten miesiąc -->
+    <p-card class="header-card">
+      <div class="summary-card-chart">
+        <div class="summary-card-info" *ngIf="summary()">
+          <h3 class="chart-header">Aktualny miesiąc</h3>
+
+          <div class="row-balance">
+            <span>Wpływy:</span>
+            <span class="text-green">{{
+              summary()?.incomes ?? 0 | currencyPLN
+            }}</span>
+          </div>
+
+          <div class="row-balance">
+            <span>Wydatki:</span>
+            <span class="text-red">{{
+              summary()?.expenses ?? 0 | currencyPLN
+            }}</span>
+          </div>
+
+          <div class="row-total">
+            <span>Suma:</span>
+            <span
+              [ngClass]="{
+                'text-green': (summary()?.balance ?? 0) >= 0,
+                'text-red': (summary()?.balance ?? 0) < 0,
+                bold: true
+              }"
+            >
+              {{ summary()?.balance ?? 0 | currencyPLN }}
+            </span>
+          </div>
+        </div>
+        <div class="chart">
+          <p-chart
+            type="pie"
+            [data]="chartData"
+            [options]="chartOptions"
+          ></p-chart>
+        </div>
+      </div>
+    </p-card>
+
+    <!-- Wykres poprzedni msc -->
+    <p-card class="header-card" *ngIf="summaryPrevious()">
+      <div class="summary-card-chart">
+        <div class="summary-card-info">
+          <h3 class="chart-header">{{ previousMonthLabel }}</h3>
+          <div class="row-balance">
+            <span>Wpływy:</span>
+            <span class="text-green">{{
+              summaryPrevious()?.incomes ?? 0 | currencyPLN
+            }}</span>
+          </div>
+          <div class="row-balance">
+            <span>Wydatki:</span>
+            <span class="text-red">{{
+              summaryPrevious()?.expenses ?? 0 | currencyPLN
+            }}</span>
+          </div>
+          <div class="row-total">
+            <span>Suma:</span>
+            <span
+              [ngClass]="{
+                'text-green': (summaryPrevious()?.balance ?? 0) >= 0,
+                'text-red': (summaryPrevious()?.balance ?? 0) < 0,
+                bold: true
+              }"
+            >
+              {{ summaryPrevious()?.balance ?? 0 | currencyPLN }}
+            </span>
+          </div>
+        </div>
+        <div class="chart">
+          <p-chart
+            type="pie"
+            [data]="chartDataPrevious"
+            [options]="chartOptionsPrevious"
+          ></p-chart>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- KOLEJNY WIERSZ -->
+  <div class="second-row">
+    <div class="column-cards">
+      <!-- KONTA -->
+      <p-card header="Konta" class="header-card account">
+        <div *ngIf="accounts.length === 0">Brak kont do wyświetlenia</div>
+
+        <div *ngFor="let account of accounts" class="account-row">
+          <span>{{ account.name }}:</span>
+          <span
+            class="bold"
+            [ngClass]="{
+              'text-green': account.balance >= 0,
+              'text-red': account.balance < 0
+            }"
+          >
+            {{ account.balance | currencyPLN }}
+          </span>
+        </div>
+      </p-card>
+
+      <!-- Transakcje -->
+      <p-card header="Ostatnie transakcje" class="header-card">
+        <div *ngIf="recentTransactions().length === 0">
+          Brak transakcji do wyświetlenia
+        </div>
+        <ul class="transaction-list">
+          <li *ngFor="let tx of recentTransactions()">
+            <div
+              class="transaction-card"
+              [ngClass]="{
+                'income-card': tx.type === 'Wpływ',
+                'expense-card': tx.type === 'Wydatek'
+              }"
+            >
+              <div class="indicator"></div>
+              <div class="tx-content">
+                <div class="tx-row">
+                  <span class="tx-date">{{
+                    tx.date | date : "shortDate"
+                  }}</span>
+                  <span
+                    class="tx-amount"
+                    [ngClass]="tx.type === 'Wpływ' ? 'text-green' : 'text-red'"
+                  >
+                    {{ tx.amount | currency : "PLN" : "symbol-narrow" }}
+                  </span>
+                </div>
+                <div class="tx-row">
+                  <span class="tx-desc">{{ tx.description }}</span>
+                  <span class="tx-account">{{ tx.accountName }}</span>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </p-card>
+    </div>
+
+    <div class="chart-history">
+      <p-card header="Historia salda">
+        <div class="chart">
+          <p-chart
+            type="line"
+            [data]="balanceChartData"
+            [options]="balanceChartOptions"
+            class="h-[30rem]"
+          ></p-chart>
+        </div>
+      </p-card>
+    </div>
+  </div>
+</div>

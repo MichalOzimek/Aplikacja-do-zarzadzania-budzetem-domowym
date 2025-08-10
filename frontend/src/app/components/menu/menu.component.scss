@@ -1,0 +1,92 @@
+@use "../../../styles" as *;
+
+:host ::ng-deep .p-toggleswitch-slider {
+  background: $color-blue !important;
+}
+
+:host ::ng-deep .p-toggleswitch-slider {
+  outline: none !important;
+}
+
+:host ::ng-deep .p-menubar-start,
+:host ::ng-deep .p-menubar-end {
+  flex: 1;
+}
+
+:host ::ng-deep .p-menubar-root-list {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+:host ::ng-deep .p-menubar-end {
+  text-align: right;
+}
+
+:host ::ng-deep .p-menubar-item-link,
+.p-menubar-item-link .pi {
+  font-size: 20px !important;
+}
+
+.theme-switch {
+  display: flex;
+  justify-self: flex-end;
+  align-self: center;
+  gap: 5px;
+}
+
+.pi-moon,
+.pi-sun {
+  font-size: 20px;
+  display: flex;
+  justify-self: center;
+  align-self: center;
+}
+
+:host ::ng-deep .p-icon {
+  height: 20px;
+  width: 20px;
+}
+
+:host ::ng-deep p-inputswitch {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+}
+:host ::ng-deep .p-menubar-button:hover {
+  background: none;
+}
+
+@media (max-width: 768px) {
+  :host ::ng-deep .p-menubar-start {
+    order: 1;
+    justify-content: center;
+  }
+
+  :host ::ng-deep .p-menubar-root-list {
+    order: 2;
+  }
+
+  :host ::ng-deep .p-menubar-end {
+    order: 3;
+  }
+
+  :host ::ng-deep .p-menubar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 0;
+  }
+
+  :host ::ng-deep .p-menubar-button {
+    justify-content: flex-start;
+  }
+
+  :host ::ng-deep .p-menubar-start,
+  :host ::ng-deep .p-menubar-end,
+  :host ::ng-deep .p-menubar-button {
+    flex: 1;
+  }
+}

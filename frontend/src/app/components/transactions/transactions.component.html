@@ -1,0 +1,211 @@
+<div class="container">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <h3>Lista transakcji</h3>
+    </div>
+  </p-toolbar>
+
+  <p-table
+    [value]="transactions()"
+    [paginator]="true"
+    [rows]="10"
+    class="p-hoverable-rows"
+    [sortField]="'date'"
+    [sortOrder]="-1"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th></th>
+        <th>Data</th>
+        <th>Typ</th>
+        <th>Opis</th>
+        <th>Kwota</th>
+        <th>Konto</th>
+        <th>Akcje</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-tx>
+      <tr
+        [ngClass]="{
+          'income-row': tx.type === 'Wpływ',
+          'expense-row': tx.type === 'Wydatek'
+        }"
+      >
+        <td>
+          <div class="indicator"></div>
+        </td>
+        <td>{{ tx.date | date : "yyyy-MM-dd" }}</td>
+        <td>{{ tx.type }}</td>
+        <td>{{ tx.description }}</td>
+        <td [ngClass]="tx.type === 'Wydatek' ? 'text-red' : 'text-green'">
+          {{ tx.amount | currency : "PLN" : "symbol-narrow" }}
+        </td>
+        <td>{{ tx.accountName }}</td>
+        <td>
+          <button
+            pButton
+            icon="pi pi-pencil"
+            class="p-button-text p-button-sm"
+            (click)="editTransaction(tx)"
+          ></button>
+          <button
+            pButton
+            icon="pi pi-trash"
+            class="p-button-text p-button-danger p-button-sm"
+            (click)="deleteTransaction(tx)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog
+  header="Edytuj wpływ"
+  [(visible)]="showEditDialog"
+  [modal]="true"
+  [style]="{ width: '400px' }"
+  (onHide)="closeEditDialog()"
+>
+  <div *ngIf="editingIncome">
+    <div class="p-field">
+      <label for="source">Źródło</label>
+      <input
+        id="source"
+        type="text"
+        pInputText
+        [(ngModel)]="editingIncome.source"
+      />
+    </div>
+
+    <div class="p-field">
+      <label for="amount">Kwota</label>
+      <input
+        id="amount"
+        type="number"
+        pInputText
+        [(ngModel)]="editingIncome.amount"
+      />
+    </div>
+
+    <div class="p-field">
+      <label for="date">Data</label>
+      <input
+        id="date"
+        type="date"
+        pInputText
+        [(ngModel)]="editingIncome.date"
+      />
+    </div>
+
+    <div class="p-field">
+      <label for="accountId">Konto</label>
+      <p-dropdown
+        id="accountId"
+        [options]="accounts"
+        optionLabel="name"
+        optionValue="id"
+        [(ngModel)]="editingIncome.accountId"
+        placeholder="Wybierz konto"
+        [appendTo]="'body'"
+        [scrollHeight]="'200px'"
+      ></p-dropdown>
+    </div>
+
+    <p-footer>
+      <button
+        pButton
+        label="Zapisz"
+        (click)="saveIncome()"
+        class="p-button-success"
+      ></button>
+      <button
+        pButton
+        label="Anuluj"
+        (click)="closeEditDialog()"
+        class="p-button-secondary"
+      ></button>
+    </p-footer>
+  </div>
+</p-dialog>
+
+<p-dialog
+  header="Edytuj wydatek"
+  [(visible)]="showEditDialog"
+  [modal]="true"
+  [style]="{ width: '400px' }"
+  (onHide)="closeEditDialog()"
+>
+  <div *ngIf="editingPurchase">
+    <div class="p-field">
+      <label for="note">Opis</label>
+      <input
+        id="note"
+        type="text"
+        pInputText
+        [(ngModel)]="editingPurchase.note"
+      />
+    </div>
+
+    <div class="p-field">
+      <label for="billCost">Kwota</label>
+      <input
+        id="billCost"
+        type="number"
+        pInputText
+        [(ngModel)]="editingPurchase.billCost"
+      />
+    </div>
+
+    <div class="p-field">
+      <label for="date">Data</label>
+      <input
+        id="date"
+        type="date"
+        pInputText
+        [(ngModel)]="editingPurchase.date"
+      />
+    </div>
+
+    <div class="p-field">
+      <label for="accountId">Konto</label>
+      <p-dropdown
+        [options]="accounts"
+        optionLabel="name"
+        optionValue="id"
+        [(ngModel)]="editingPurchase.accountId"
+        placeholder="Wybierz konto"
+        [appendTo]="'body'"
+        [scrollHeight]="'200px'"
+      ></p-dropdown>
+    </div>
+
+    <div class="p-field row-expense">
+      <label for="category">Kategoria</label>
+      <p-dropdown
+        [options]="categories"
+        optionLabel="name"
+        optionValue="id"
+        [(ngModel)]="editingPurchase.categoryId"
+        placeholder="Wybierz kategorię"
+        [appendTo]="'body'"
+        [scrollHeight]="'200px'"
+      ></p-dropdown>
+    </div>
+
+    <p-footer>
+      <button
+        pButton
+        label="Zapisz"
+        class="p-button-success"
+        (click)="savePurchase()"
+      ></button>
+      <button
+        pButton
+        label="Anuluj"
+        class="p-button-secondary"
+        (click)="closeEditDialog()"
+      ></button>
+    </p-footer>
+  </div>
+</p-dialog>

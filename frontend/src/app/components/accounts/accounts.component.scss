@@ -1,0 +1,33 @@
+.container {
+  width: 80%;
+  margin: 50px auto;
+}
+
+.grid-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.grid-header {
+  background-color: red !important;
+}
+
+:host ::ng-deep .p-toolbar {
+  border-radius: 0 !important;
+}
+
+:host ::ng-deep tr:hover {
+  background-color: #bae0ff;
+  transition: background-color 0.2s ease-in-out;
+}
+
+:host ::ng-deep .p-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+:host ::ng-deep .p-dialog {
+  width: 400px !important;
+}

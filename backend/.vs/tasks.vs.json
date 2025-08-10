@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-IncomesRepository",
+      "appliesTo": "Repositories/IncomesRepository.cs",
+      "type": "launch"
+    },
+    {
+      "taskLabel": "task-AccountsRepository",
+      "appliesTo": "Repositories/AccountsRepository.cs",
+      "type": "launch"
+    }
+  ]
+}

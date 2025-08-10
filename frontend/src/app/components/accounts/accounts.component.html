@@ -1,0 +1,92 @@
+<div class="container">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <button
+        pButton
+        label="Dodaj nowe konto"
+        icon="pi pi-plus"
+        (click)="openCreateDialog()"
+      ></button>
+    </div>
+  </p-toolbar>
+
+  <p-table
+    [value]="accounts()"
+    [paginator]="true"
+    [rows]="5"
+    class="p-hoverable-rows"
+  >
+    <ng-template pTemplate="header">
+      <tr class="grid-header">
+        <th>Nazwa</th>
+        <th>Saldo</th>
+        <th>Akcje</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-account>
+      <tr>
+        <td>{{ account.name }}</td>
+        <td>{{ account.balance }}</td>
+        <td class="grid-actions">
+          <button
+            pButton
+            icon="pi pi-pencil"
+            class="p-button-text p-button-sm"
+            (click)="openEditDialog(account)"
+          ></button>
+          <button
+            pButton
+            icon="pi pi-trash"
+            class="p-button-text p-button-danger p-button-sm"
+            (click)="deleteAccount(account)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog
+    header="{{
+      editingAccount()?.id === 0 ? 'Dodaj nowe konto' : 'Edytuj konto'
+    }}"
+    [modal]="true"
+    [closable]="true"
+    (onHide)="closeDialog()"
+    [visible]="showDialog()"
+    (visibleChange)="onDialogVisibleChange($event)"
+  >
+    <div class="p-fluid" *ngIf="editingAccount() as acc">
+      <div class="p-field">
+        <label for="name">Name</label>
+        <input id="name" type="text" pInputText [(ngModel)]="acc.name" />
+      </div>
+
+      <div class="p-field">
+        <label for="balance">Balance</label>
+        <input
+          id="balance"
+          type="number"
+          pInputText
+          [(ngModel)]="acc.balance"
+        />
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        label="Cancel"
+        icon="pi pi-times"
+        (click)="showDialog.set(false)"
+        class="p-button-text"
+      ></button>
+      <button
+        pButton
+        label="Save"
+        icon="pi pi-check"
+        (click)="saveAccount()"
+        [disabled]="!editingAccount()?.name"
+      ></button>
+    </ng-template>
+  </p-dialog>
+</div>

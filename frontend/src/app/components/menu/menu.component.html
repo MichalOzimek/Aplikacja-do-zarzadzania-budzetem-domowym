@@ -1,0 +1,17 @@
+<p-menubar [model]="items()">
+  <ng-template #start>
+    <a
+      pRipple
+      class="flex items-center p-menubar-item-link"
+      [routerLink]="['/']"
+    >
+      <img src="/img/logo.png" alt="" height="50" />
+    </a>
+  </ng-template>
+  <ng-template #end>
+    <div class="theme-switch">
+      <i class="pi" [ngClass]="darkMode ? 'pi-moon' : 'pi-sun'"></i>
+      <p-inputSwitch [(ngModel)]="darkMode" (onChange)="toggleTheme()" />
+    </div>
+  </ng-template>
+</p-menubar>

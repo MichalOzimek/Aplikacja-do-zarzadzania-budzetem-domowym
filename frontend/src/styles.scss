@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+$color-blue: #2196f3;
+$color-bacground: #ecfeff;
+
+body {
+  background-color: #2195f370;
+}
+
+.my-app-dark {
+  --p-card-background: #004276 !important;
+
+  body {
+    background-color: var(--p-menubar-background);
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Contracts",
+    "\\Data",
+    "\\Models",
+    "\\Models\\Account",
+    "\\Models\\Category",
+    "\\Models\\Purchase",
+    "\\Models\\Shop",
+    "\\Properties",
+    "\\Repositories"
+  ],
+  "SelectedNode": "\\Models\\Income\\IncomeDto.cs",
+  "PreviewInSolutionExplorer": false
+}
